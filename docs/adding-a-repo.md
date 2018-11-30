@@ -78,7 +78,7 @@ just including and referencing them in the template.
 |`RepoOwner`|GitHub repo namespace, i.e. `ngmiller`|
 |`RepoName`|GitHub repo name|
 |`RepoBranch`|Branch name to build|
-|`RepoToken`|OAuth token with `repo` scope|
+|`RepoToken`|OAuth token with `repo` scope, be sure to set `"NoEcho": true`|
 |`Stage`|Used to reference pipeline parameters `development`, `staging`, or `production`|
 
 ### `fabrik/parameters.json`
