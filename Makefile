@@ -1,5 +1,5 @@
-IMAGE = ngmiller/fabrik:build
-GOPATH = /go/src/github.com/ngmiller/fabrik
+IMAGE = opolis/build:build
+GOPATH = /go/src/github.com/opolis/build
 FUNC = nothing
 
 RUN = docker run -it --rm \

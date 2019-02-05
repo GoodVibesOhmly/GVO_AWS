@@ -1,9 +1,9 @@
-service: fabrik
+service: opolis-build
 
 provider:
     name: aws
     runtime: go1.x
-    profile: ${opt:profile, 'fabrik'}
+    profile: ${opt:profile, 'opolis-build'}
     region: ${opt:region, 'us-west-2'}
     stage: ${opt:stage}
     cfLogs: true
@@ -110,7 +110,7 @@ resources:
             Type: AWS::IAM::Role
             Properties:
                 Path: "/"
-                RoleName: fabrik-lambda-all
+                RoleName: opolis-build-lambda-all
                 AssumeRolePolicyDocument:
                     Version: '2012-10-17'
                     Statement:

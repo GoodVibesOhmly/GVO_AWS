@@ -19,7 +19,7 @@ const (
 
 	EventTypePush = "push"
 
-	GitContextPrep  = "fabrik/0-prep"
+	GitContextPrep  = "build/0-prep"
 	GitRefBranch    = "branch"
 	GitRefMaster    = "master"
 	GitRefTag       = "tag"
@@ -28,8 +28,8 @@ const (
 	GitStatePending = "pending"
 	GitStateSuccess = "success"
 
-	KeyHmac  = "fabrik.github.hmac"
-	KeyToken = "fabrik.github.token"
+	KeyHmac  = "build.github.hmac"
+	KeyToken = "build.github.token"
 
 	PipelineStateStarted   = "STARTED"
 	PipelineStateResumed   = "RESUMED"

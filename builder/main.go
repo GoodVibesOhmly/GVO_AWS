@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ngmiller/fabrik/lambda"
-	"github.com/ngmiller/fabrik/repo"
-	"github.com/ngmiller/fabrik/secure"
-	"github.com/ngmiller/fabrik/stack"
-	"github.com/ngmiller/fabrik/types"
+	"github.com/opolis/build/lambda"
+	"github.com/opolis/build/repo"
+	"github.com/opolis/build/secure"
+	"github.com/opolis/build/stack"
+	"github.com/opolis/build/types"
 
 	"github.com/aws/aws-lambda-go/events"
 	awsLambda "github.com/aws/aws-lambda-go/lambda"
@@ -182,9 +182,7 @@ func Process(log *log.Entry, stop <-chan struct{}, event types.GitHubEvent, repo
 		}
 
 		// fetch stack and parameter files from repoistory
-		// pipeline.json - CI/CD pipeline stack spec
-		// parameters.json - stack parameters
-		context, err := buildContext(event, repo, "fabrik/pipeline.json", "fabrik/parameters.json")
+		context, err := buildContext(event, repo, "deploy/pipeline.json", "deploy/pipeline.parameters.json")
 		if err != nil {
 			result <- err
 			return

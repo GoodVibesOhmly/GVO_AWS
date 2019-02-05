@@ -1,5 +1,5 @@
-IMAGE = ngmiller/fabrik:build
-GOPATH = /go/src/github.com/ngmiller/fabrik/cli/config
+IMAGE = opolis/build:build
+GOPATH = /go/src/github.com/opolis/build/cli/config
 
 RUN = docker run -it --rm \
 	  -v $(HOME)/.aws:/root/.aws \
@@ -8,8 +8,8 @@ RUN = docker run -it --rm \
 	  -w $(GOPATH) \
 	  $(IMAGE)
 
-BIN_MACOS = fabrik-config-macos
-BIN_LINUX = fabrik-config-linux
+BIN_MACOS = opolis-build-config-macos
+BIN_LINUX = opolis-build-config-linux
 
 COMPILE_MACOS = env GOOS=darwin go build -ldflags="-s -w"
 COMPILE_LINUX = env GOOS=linux go build -ldflags="-s -w"

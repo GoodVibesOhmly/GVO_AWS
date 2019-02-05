@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ngmiller/fabrik/types"
+	"github.com/opolis/build/types"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -18,7 +18,7 @@ import (
 const (
 	// AWS sdk code does not make specific distinctions amongst various
 	// types of ValidationErrors, other than their message
-	// ...so we have to match them
+	// ...so we have to string match them
 	ErrValidationError = "ValidationError"
 	ErrNoUpdate        = "No updates are to be performed."
 	ErrDoesNotExist    = "does not exist"

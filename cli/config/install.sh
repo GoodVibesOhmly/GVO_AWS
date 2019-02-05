@@ -11,11 +11,11 @@ esac
 # Download release
 VERSION=$(cat VERSION)
 
-curl -Ls https://github.com/ngmiller/fabrik/releases/download/$VERSION/fabrik-config-$OS > fabrik-config
-chmod +x fabrik-config
+curl -Ls https://github.com/opolis/build/releases/download/$VERSION/opolis-build-config-$OS > opolis-build-config
+chmod +x opolis-build-config
 
 read -p "Save to /usr/local/bin? [y/n] " ALLOW_MOVE
 
 if [[ "$ALLOW_MOVE" == "y" ]]; then
-    mv fabrik-config /usr/local/bin/
+    mv opolis-build-config /usr/local/bin/
 fi
