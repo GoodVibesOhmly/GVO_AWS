@@ -23,15 +23,23 @@ deps:
 .PHONY: build
 build:
 	@mkdir -p bin/lib
+	@echo 'Building builder...'
 	@$(RUN) $(COMPILE) -o bin/builder builder/main.go
+	@echo 'Building listener...'
 	@$(RUN) $(COMPILE) -o bin/listener listener/main.go
+	@echo 'Building notifier...'
 	@$(RUN) $(COMPILE) -o bin/notifier notifier/main.go
+	@echo 'Building lib/s3cleaner...'
+	@$(RUN) $(COMPILE) -o bin/lib/s3cleaner lib/s3cleaner/main.go
+	@echo 'Building lib/s3deployer...'
+	@$(RUN) $(COMPILE) -o bin/lib/s3deployer lib/s3deployer/main.go
+	@echo 'Building lib/stack-cleaner...'
 	@$(RUN) $(COMPILE) -o bin/lib/stack-cleaner lib/stack-cleaner/main.go
+	@echo 'Done!'
 
-# @$(RUN) $(COMPILE) -o bin/lib/ecs-watcher lib/ecs-watcher/main.go
-# @$(RUN) $(COMPILE) -o bin/lib/s3deployer lib/s3deployer/main.go
-# @$(RUN) $(COMPILE) -o bin/lib/s3cleaner lib/s3cleaner/main.go
-# @$(RUN) $(COMPILE) -o bin/lib/slack-notifier lib/slack-notifier/main.go
+.PHONY: config-cli
+config-cli:
+	@$(RUN) env GOOS=darwin go build -o opolis-build-config-macos -ldflags="-s -w" cli/config/main.go
 
 .PHONY: build-func
 build-func:

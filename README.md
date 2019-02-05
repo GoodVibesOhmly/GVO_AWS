@@ -8,7 +8,7 @@ It allows your service's build, test, and deployment lifecycle to be completely 
 alongside the service implementation. This allows the lifecycle to be completely automated, tested in isolation from
 other deployments of the same service, and most importantly, *reliable*.
 
-Inspired by the ideas presented by [awesome-codepipeline-ci](https://github.com/nicolai86/awesome-codepipeline-ci)
+Inspired by the ideas presented at [awesome-codepipeline-ci](https://github.com/nicolai86/awesome-codepipeline-ci)
 
 Please note these docs are still very much a work in progress. Let us know where there are gaps, or where
 more clarification is needed by opening an issue!
@@ -21,13 +21,13 @@ TBD (new pipeline, per branch, etc)
 
 ## Getting Started
 
-Before setting up `opolis/build` in your AWS account, it's important to know that it isn't designed to be a "plug-and-play"
-system. For it to be used effectively, it requires having in-depth knowledge of your deployment architecture, how
+Before setting up `opolis/build` in your AWS account, it's important to know that it doesn't make any assumptions about
+your architecture. For it to be used effectively, it requires having in-depth knowledge of your deployment architecture, how
 various components integrate with one another, and how those components share resources. `opolis/build` simply provides a
 framework and set of conventions to take that knowledge, and turn it into a repeatable and reliable process.
 
-At a minimum, `opolis/build` assumes you are deploying to AWS, and have a basic working knowledge of CloudFormation.
-If you haven't spent much time with CloudFormation, don't worry, I try to explain the high-level concepts where
+At a minimum, `opolis/build` assumes you are using GitHub, deploying to AWS, and have a basic working knowledge of CloudFormation.
+If you haven't spent much time with CloudFormation, don't worry, we try to explain the high-level concepts where
 appropriate in the [examples](./docs/examples.md).
 
 The CloudFormation [Resource and Property Type Reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)
@@ -52,6 +52,11 @@ aws_secret_access_key = O4vew...
 region = <any valid region> # i.e. us-west-2
 output = json
 ```
+
+Please note that your choice of deployment region should be made based on what AWS services are available there.
+At the minimum, it must support CodePipeline, CodeBuild, and CloudFormation. If you have an idea for what services
+you'd like to use in your application, have a look at the [Region Table](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)
+for a list of what's available in each region.
 
 ### Clone
 
@@ -80,7 +85,7 @@ Build each Lambda function
 
 `opolis/build` needs two secret keys to interact with GitHub. These secrets are stored on AWS SSM,
 and encrypted with a key from KMS. The easiest way to set and read these keys on AWS
-is to use [`build-config`](./cli/config/).
+is to use [`opolis-config`](./cli/config/). Please install before continuing.
 
 |Key|Description|
 |---|-----------|
@@ -92,10 +97,10 @@ is to use [`build-config`](./cli/config/).
 1. [Create](https://console.aws.amazon.com/kms/home?region=us-west-2#/kms/keys/create) an encryption key on KMS
 and make note of the ID (e.g. `adad8b59-c518-40e0-8039-f91fca167833`)
 2. [Obtain](https://github.com/settings/tokens/new) an OAuth token from GitHub with `repo` scope.
-3. Use `build-config` to store it securely
+3. Use `opolis-config` to store it securely
 
 ```
-$ build-config --profile opolis-build set build.github.token {your-aws-kms-key-id}
+$ opolis-config --profile opolis-build set build.github.token <your-aws-kms-key-id>
 ```
 
 `build.github.hmac`
@@ -112,7 +117,7 @@ $ ./cli/random.sh
 ```
 
 ```
-build-config --profile opolis-build set build.github.hmac {your-aws-kms-key-id}
+build-config --profile opolis-build set build.github.hmac <your-aws-kms-key-id>
 ```
 
 ### Deploy
@@ -128,7 +133,7 @@ Serverless: Packaging service...
 Serverless: Excluding development dependencies...
 Serverless: Uploading CloudFormation file to S3...
 Serverless: Uploading artifacts...
-Serverless: Uploading service .zip file to S3 (10.31 MB)...
+Serverless: Uploading service .zip file to S3 (50.3 MB)...
 Serverless: Validating template...
 Serverless: Updating Stack...
 Serverless: Checking Stack update progress...
@@ -136,17 +141,20 @@ Serverless: Checking Stack update progress...
 Serverless: Stack update finished...
 Service Information
 service: opolis-build
-stage: dev
+stage: prod
 region: us-west-2
 stack: opolis-build-prod
 api keys:
   None
 endpoints:
-  POST - https://xxxxxxx.execute-api.us-west-2.amazonaws.com/dev/event <------- *
+  POST - https://xxxxxxx.execute-api.us-west-2.amazonaws.com/prod/webhook <------- *
 functions:
   listener: opolis-build-prod-listener
   builder: opolis-build-prod-builder
   notifier: opolis-build-prod-notifier
+  s3cleaner: opolis-build-prod-s3cleaner
+  s3deployer: opolis-build-prod-s3deployer
+  stack-cleaner: opolis-build-prod-stack-cleaner
 Serverless: Removing old service versions...
 ```
 
@@ -169,8 +177,8 @@ templates for your services. Take a look at the [examples](./docs/examples.md) t
 ### Doesn't AWS have a product that does this already?
 
 Yes and no. CloudFormation, CodeBuild, and CodePipeline provide the majority of the heavy lifting `opolis/build`
-doesn't do itself, but there are certain properties I wanted my deployments to have, like unlimited isolated
-deployments, that I wasn't getting with those products on their own.
+doesn't do itself, but there are certain properties we wanted our deployments to have, like unlimited isolated
+deployments, that we weren't getting with those products on their own.
 
 According to the [CodePipeline Concepts](https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts.html) document,
 

@@ -1,5 +1,9 @@
 service: opolis-build
 
+# NOTE: opolis/build will be moving off of serverless shortly. This was used prior to fully
+# understanding and getting experience with the AWS serverless-application-model (SAM), and we will be migrating to it
+# soon to remove this dependency and just use straight CloudFormation instead.
+
 provider:
     name: aws
     runtime: go1.x
@@ -59,6 +63,16 @@ functions:
                             - STARTED
                             - SUCCEEDED
                             - FAILED
+    s3cleaner:
+        handler: bin/lib/s3cleaner
+        memorySize: 128
+        timeout: 300
+        role: lambdaRole
+    s3deployer:
+        handler: bin/lib/s3deployer
+        memorySize: 128
+        timeout: 300
+        role: lambdaRole
     stack-cleaner:
         handler: bin/lib/stack-cleaner
         memorySize: 128
@@ -75,6 +89,12 @@ resources:
             Properties:
                 RetentionInDays: 7
         NotifierLogGroup:
+            Properties:
+                RetentionInDays: 7
+        S3cleanerLogGroup:
+            Properties:
+                RetentionInDays: 7
+        S3deployerLogGroup:
             Properties:
                 RetentionInDays: 7
         StackDashcleanerLogGroup:
@@ -128,16 +148,3 @@ resources:
                           - Effect: Allow
                             Action: '*'
                             Resource: '*'
-#     ecs-watcher:
-#         handler: bin/lib/ecs-watcher
-#         memorySize: 128
-#         timeout: 30
-#         role: lambdaRole
-#         events:
-#             - cloudwatchEvent:
-#                 event:
-#                     source:
-#                         - "aws.ecs"
-#                     detail-type:
-#                         - "ECS Task State Change"
-

@@ -8,7 +8,7 @@ Repositories can be processed by `opolis/build` by configured a webhook and addi
 "Webhooks" are a means for GitHub to notify third party services that a particular event has occurred on a particular
 repository. It is simply a `POST` request to a particular endpoint, containing an event. An event can be anything from
 opening a pull request, to merging into master. For our purposes, we are only interested in what are known
-as `push` events.
+as `push` events. These occur every time a branch is pushed, pushed to, or merged.
 
 After deploying the serverless project in this repo, make note of the API Gateway endpoint,
 
@@ -17,7 +17,7 @@ Serverless: Packaging service...
 Serverless: Excluding development dependencies...
 Serverless: Uploading CloudFormation file to S3...
 Serverless: Uploading artifacts...
-Serverless: Uploading service .zip file to S3 (10.31 MB)...
+Serverless: Uploading service .zip file to S3 (50.3 MB)...
 Serverless: Validating template...
 Serverless: Updating Stack...
 Serverless: Checking Stack update progress...
@@ -31,11 +31,14 @@ stack: opolis-build-prod
 api keys:
   None
 endpoints:
-  POST - https://xxxxxxx.execute-api.us-west-2.amazonaws.com/dev/event <------- *
+  POST - https://xxxxxxx.execute-api.us-west-2.amazonaws.com/prod/webhook <------- *
 functions:
   listener: opolis-build-prod-listener
   builder: opolis-build-prod-builder
   notifier: opolis-build-prod-notifier
+  s3cleaner: opolis-build-prod-s3cleaner
+  s3deployer: opolis-build-prod-s3deployer
+  stack-cleaner: opolis-build-prod-stack-cleaner
 Serverless: Removing old service versions...
 ```
 

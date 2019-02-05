@@ -16,7 +16,7 @@ import (
 func main() {
 	app := cli.NewApp()
 	app.Name = "config"
-	app.Usage = "read and write encrypted values from/to AWS SSM"
+	app.Usage = "get and set encrypted values from/to AWS SSM"
 	app.Version = "v0.1.0"
 
 	app.Flags = []cli.Flag{
@@ -28,8 +28,8 @@ func main() {
 
 	app.Commands = []cli.Command{
 		{
-			Name:  "write",
-			Usage: "write a secret value to SSM - write <name> <kms key id>",
+			Name:  "set",
+			Usage: "set a secret value to SSM - set <name> <kms key id>",
 			Action: enforceSession(func(c *cli.Context, client *ssm.SSM) error {
 				if !isEven(c.NArg()) {
 					return cli.NewExitError("arguments must be pairs of <name> <key id>", 1)
@@ -41,6 +41,7 @@ func main() {
 					keyId := c.Args().Get(i + 1)
 
 					// prompt for value
+					fmt.Println("Paste your value below...")
 					fmt.Printf("%s: ", name)
 					bytes, _ := terminal.ReadPassword(0)
 					fmt.Println()
@@ -63,8 +64,8 @@ func main() {
 			}),
 		},
 		{
-			Name:  "read",
-			Usage: "read a secret value in SSM - read <name1> <name2> ... <nameN>",
+			Name:  "get",
+			Usage: "get a secret value in SSM - get <name1> <name2> ... <nameN>",
 			Action: enforceSession(func(c *cli.Context, client *ssm.SSM) error {
 				if c.NArg() == 0 {
 					return cli.NewExitError("read needs at least one parameter name to fetch", 1)
