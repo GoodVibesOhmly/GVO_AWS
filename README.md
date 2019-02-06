@@ -195,7 +195,7 @@ in the near future, but until that happens, `opolis/build` will continue to fill
 ### Limitations
 
 * AWS [limits](https://docs.aws.amazon.com/codepipeline/latest/userguide/limits.html) the total number of CodePipeline
-instances to 300 in any given region. If you have hundreds of developers pushing multiple branches per day for testing,
+instances in your account to 300 in any given region. If you have hundreds of developers pushing multiple branches per day for testing,
 you may hit this limit. Ideally, `opolis/build` would utilize multiple regions at once, making this limit 1200 for all supported US
 and 1200 for all supported EU regions. Let's work together to figure out a solution!
 
