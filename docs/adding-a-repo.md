@@ -1,7 +1,7 @@
 Adding a Repository
 ===================
 
-Repositories can be processed by `opolis/build` by configured a webhook and adding a few files to the repo.
+Repositories can be processed by `opolis/build` by configuring a webhook and adding a few files to the repo.
 
 ## Configuring the Webhook
 
@@ -100,18 +100,18 @@ on every tag. The parameters file is keyed accordingly, and each set of paramete
 }
 ```
 
-e.g.
+For example,
 
 ```
 {
     "development": [
-        { "ParameterKey": "a", "ParameterValue": "1" }
+        { "ParameterKey": "foo", "ParameterValue": "1" }
     ],
     "staging": [
-        ...
+        { "ParameterKey": "foo", "ParameterValue": "2" }
     ],
     "production": [
-        ...
+        { "ParameterKey": "foo", "ParameterValue": "3" }
     ]
 }
 ```
