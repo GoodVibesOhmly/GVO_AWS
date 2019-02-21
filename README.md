@@ -15,6 +15,9 @@ more clarification is needed by opening an issue!
 
 Created with :heart: at [Opolis](https://opolis.co) in Colorado.
 
+**Please note, this project is still under active development and breaking changes in this version will occur
+until the project is considered stable and has reached `1.0.0`**
+
 ## Overview
 
 TBD (new pipeline, per branch, etc)
