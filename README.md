@@ -1,7 +1,7 @@
 `opolis/build`
 ==============
 
-*Infrastructure as code.*
+*Infrastructure as Code*
 
 `opolis/build` is a serverless continuous integration and deployment ("CI/CD") orchestrator for services built on AWS.
 It allows your service's build, test, and deployment lifecycle to be completely defined *as code*, and live right
@@ -20,7 +20,7 @@ until the project is considered stable and has reached `1.0.0`**
 
 ## Overview
 
-TBD (new pipeline, per branch, etc)
+For a high-level overview of how `opolis/build` works, see [`docs/overview.md`](./docs/overview.md).
 
 ## Getting Started
 
