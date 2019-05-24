@@ -28,8 +28,8 @@ const (
 	GitStatePending = "pending"
 	GitStateSuccess = "success"
 
-	KeyHmac  = "build.github.hmac"
-	KeyToken = "build.github.token"
+	KeyHmac  = "opolis.github.hmac"
+	KeyToken = "opolis.github.token"
 
 	PipelineStateStarted   = "STARTED"
 	PipelineStateResumed   = "RESUMED"

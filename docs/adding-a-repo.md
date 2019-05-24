@@ -1,7 +1,7 @@
 Adding a Repository
 ===================
 
-Repositories can be processed by `opolis/build` by configuring a webhook and adding a few files to the repo.
+Repositories can be processed by `opolis/deployer` by configuring a webhook and adding a few files to the repo.
 
 ## Configuring the Webhook
 
@@ -24,40 +24,40 @@ Serverless: Checking Stack update progress...
 ..............
 Serverless: Stack update finished...
 Service Information
-service: opolis-build
+service: opolis-deployer
 stage: prod
 region: us-west-2
-stack: opolis-build-prod
+stack: opolis-deployer-prod
 api keys:
   None
 endpoints:
   POST - https://xxxxxxx.execute-api.us-west-2.amazonaws.com/prod/webhook <------- *
 functions:
-  listener: opolis-build-prod-listener
-  builder: opolis-build-prod-builder
-  notifier: opolis-build-prod-notifier
-  s3cleaner: opolis-build-prod-s3cleaner
-  s3deployer: opolis-build-prod-s3deployer
-  stack-cleaner: opolis-build-prod-stack-cleaner
+  listener: opolis-deployer-prod-listener
+  builder: opolis-deployer-prod-builder
+  notifier: opolis-deployer-prod-notifier
+  s3cleaner: opolis-deployer-prod-s3cleaner
+  s3deployer: opolis-deployer-prod-s3deployer
+  stack-cleaner: opolis-deployer-prod-stack-cleaner
 Serverless: Removing old service versions...
 ```
 
 On the GitHub repo page, go to "Settings" > "Webhooks" > "Add webhook". Provide the API Gateway endpoint as the hook
-destination, the HMAC key set as a build system parameter during setup (`build.github.hmac`),
+destination, the HMAC key set as a build system parameter during setup (`opolis.github.hmac`),
 and select "Just the `push` event". Be sure the content type is set to `application/json`.
 
 And that's it! Check out the status updates on each commit pushed to GitHub to track that commit's
-progress through the build system. But, first you need to create some files for `opolis/build` to use.
+progress through the build system. But, first you need to create some files for `opolis/deployer` to use.
 
-## Configuring `opolis/build`
+## Configuring `opolis/deployer`
 
-`opolis/build` expects the following files to be present in the repository when it picks up
-a `push` event from GitHub. These files do not have to be present in the `master` branch right away. `opolis/build`
+`opolis/deployer` expects the following files to be present in the repository when it picks up
+a `push` event from GitHub. These files do not have to be present in the `master` branch right away. `opolis/deployer`
 will simply see them as part of your branch, allowing you to test the entire deployment lifecycle in isolation
 from the rest of the work in the repository. (Yes, that means you can test changes to your build and deploy
 configuration in a branch before promoting the changes to `master`!)
 
-The following is a list of files to crate, along with their description. For now, `opolis/build` expects all files to live
+The following is a list of files to crate, along with their description. For now, `opolis/deployer` expects all files to live
 in a directory at the root of your repo called `deploy`. This may be configurable in the future, but this
 setup will always be supported.
 
@@ -68,11 +68,11 @@ Concrete examples of these files can be found in [`examples`](examples.md).
 **Required**
 
 Defines the entire CI/CD pipeline as a
-[CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) template. `opolis/build`
+[CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) template. `opolis/deployer`
 will pass this template to CloudFormation so it can spin up a unique CodePipeline instance for your project.
 
 This template is *required* to accept the following parameters. If any are missing, the prepartion phase
-will fail. These parameters are provided by `opolis/build` at runtime, you are not responsible for specifying them,
+will fail. These parameters are provided by `opolis/deployer` at runtime, you are not responsible for specifying them,
 just including and referencing them in the template.
 
 |Key|Value|

@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/opolis/build/pipeline"
-	"github.com/opolis/build/repo"
-	"github.com/opolis/build/secure"
-	"github.com/opolis/build/types"
-
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws/session"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/opolis/deployer/pipeline"
+	"github.com/opolis/deployer/repo"
+	"github.com/opolis/deployer/secure"
+	"github.com/opolis/deployer/types"
 )
 
 func init() {

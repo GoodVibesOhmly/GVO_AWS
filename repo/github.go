@@ -9,9 +9,9 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/opolis/build/types"
-
 	log "github.com/sirupsen/logrus"
+
+	"github.com/opolis/deployer/types"
 )
 
 type GitHubRepository struct {

@@ -1,7 +1,7 @@
-`opolis-build-config`
+`opolis-deployer-config`
 ===============
 
-`opolis-build-config` is a simple CLI interface for reading and writing encrypted AWS SSM parameters.
+`opolis-deployer-config` is a simple CLI interface for reading and writing encrypted AWS SSM parameters.
 
 ## Install
 
@@ -12,7 +12,7 @@ $ ./install.sh
 This will fetch the latest compiled binary from the Fabrik release on GitHub. It does
 a fairly rudimentary job of checking which OS you are running, but defaults to Linux.
 
-To check the installation, run `$ opolis-build-config` if you allowed saving to `/usr/local/bin`,
+To check the installation, run `$ opolis-deployer-config` if you allowed saving to `/usr/local/bin`,
 otherwise, run it from this directory.
 
 ## Usage
@@ -22,7 +22,7 @@ otherwise, run it from this directory.
 `--profile NAME`
 
 Use the profile `NAME` set in `$HOME/.aws/credentials`. If this option is not set,
-`opolis-build-config` will try to read the access and region configuration from the environment.
+`opolis-deployer-config` will try to read the access and region configuration from the environment.
 The conventions and variable names are the same as the `aws-cli` tool. See the
 [docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-environment.html) for more detail.
 
@@ -32,14 +32,14 @@ Read an encrypted value from SSM. The current profile must have access to the KM
 to write the value.
 
 ```
-$ opolis-build-config read my.parameter.name
+$ opolis-deployer-config read my.parameter.name
 ```
 
 Multiple parameters may be fetched at once. Output will be one value per line, in the order
 they were requested.
 
 ```
-$ opolis-build-config read my.first.parameter my.second.parameter ... my.nth.parameter
+$ opolis-deployer-config read my.first.parameter my.second.parameter ... my.nth.parameter
 ```
 
 **WARNING: This writes decrypted values to stdout. Be aware of this when using
@@ -49,7 +49,7 @@ In a service context where stdout is logged, it is recommended to read the decry
 value into an environment variable.
 
 ```
-MYVAR=$(opolis-build-config read my.secret)
+MYVAR=$(opolis-deployer-config read my.secret)
 ```
 
 ### `write`
@@ -59,7 +59,7 @@ KMS key for encryption. Arguments are pairs of `parameter-name kms-key-id`. For 
 pair given, a prompt is show where you can paste the desired value.
 
 ```
-$ opolis-build-config write my.first.parameter 1234-my-kms-key-id ... my.last.paramter 5678-my-kms-key-id
+$ opolis-deployer-config write my.first.parameter 1234-my-kms-key-id ... my.last.paramter 5678-my-kms-key-id
 ```
 
 Input is similar to password input, that is, you will not see the value provided echoed
