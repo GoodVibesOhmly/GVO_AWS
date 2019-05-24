@@ -1,4 +1,4 @@
-`opolis/build` Repository Examples
+`opolis/deployer` Repository Examples
 ==================================
 
 Coming soon!!

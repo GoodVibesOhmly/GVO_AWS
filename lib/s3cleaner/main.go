@@ -10,10 +10,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
-
-	"github.com/opolis/build/types"
-
 	log "github.com/sirupsen/logrus"
+
+	"github.com/opolis/deployer/types"
 )
 
 func init() {

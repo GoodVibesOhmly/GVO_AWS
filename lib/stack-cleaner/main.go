@@ -8,15 +8,14 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/opolis/build/lambda"
-	"github.com/opolis/build/stack"
-	"github.com/opolis/build/types"
-
 	awsLambda "github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/lambdacontext"
 	"github.com/aws/aws-sdk-go/aws/session"
-
 	log "github.com/sirupsen/logrus"
+
+	"github.com/opolis/deployer/lambda"
+	"github.com/opolis/deployer/stack"
+	"github.com/opolis/deployer/types"
 )
 
 const (

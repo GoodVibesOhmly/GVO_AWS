@@ -11,11 +11,11 @@ esac
 # Download release
 VERSION=$(cat VERSION)
 
-curl -Ls https://github.com/opolis/build/releases/download/$VERSION/opolis-build-config-$OS > opolis-build-config
-chmod +x opolis-build-config
+curl -Ls https://github.com/opolis/deployer/releases/download/$VERSION/opolis-deployer-config-$OS > opolis-deployer-config
+chmod +x opolis-deployer-config
 
 read -p "Save to /usr/local/bin? [y/n] " ALLOW_MOVE
 
 if [[ "$ALLOW_MOVE" == "y" ]]; then
-    mv opolis-build-config /usr/local/bin/
+    mv opolis-deployer-config /usr/local/bin/
 fi

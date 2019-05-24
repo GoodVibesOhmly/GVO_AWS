@@ -17,15 +17,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/opolis/build/secure"
-	"github.com/opolis/build/types"
-
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+
+	"github.com/opolis/deployer/secure"
+	"github.com/opolis/deployer/types"
 )
 
 const (

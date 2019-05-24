@@ -1,5 +1,5 @@
-IMAGE = opolis/build:build
-GOPATH = /go/src/github.com/opolis/build
+IMAGE = opolis/deployer:build
+GOPATH = /go/src/github.com/opolis/deployer
 FUNC = nothing
 
 RUN = docker run -it --rm \
@@ -39,7 +39,7 @@ build:
 
 .PHONY: config-cli
 config-cli:
-	@$(RUN) env GOOS=darwin go build -o opolis-build-config-macos -ldflags="-s -w" cli/config/main.go
+	@$(RUN) env GOOS=darwin go build -o opolis-deployer-config-macos -ldflags="-s -w" cli/config/main.go
 
 .PHONY: build-func
 build-func:

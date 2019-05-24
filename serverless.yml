@@ -1,13 +1,13 @@
-service: opolis-build
+service: opolis-deployer
 
-# NOTE: opolis/build will be moving off of serverless shortly. This was used prior to fully
+# NOTE: opolis/deployer will be moving off of serverless shortly. This was used prior to fully
 # understanding and getting experience with the AWS serverless-application-model (SAM), and we will be migrating to it
 # soon to remove this dependency and just use straight CloudFormation instead.
 
 provider:
     name: aws
     runtime: go1.x
-    profile: ${opt:profile, 'opolis-build'}
+    profile: ${opt:profile, 'opolis-deployer'}
     region: ${opt:region, 'us-west-2'}
     stage: ${opt:stage}
     cfLogs: true
@@ -130,7 +130,7 @@ resources:
             Type: AWS::IAM::Role
             Properties:
                 Path: "/"
-                RoleName: opolis-build-lambda-all
+                RoleName: opolis-deployer-lambda-all
                 AssumeRolePolicyDocument:
                     Version: '2012-10-17'
                     Statement:
